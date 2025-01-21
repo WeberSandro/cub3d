@@ -3,26 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/23 17:42:30 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/02/23 17:43:20 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/03 12:10:23 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/23 20:34:56 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./libft.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	size_t	src_len;
+	size_t	i;
 
-	src_len = ft_strlen(src);
-	if (src_len + 1 < dstsize)
-		ft_memcpy(dst, src, src_len + 1);
-	else if (dstsize != 0)
+	i = 0;
+	if (dstsize == 0)
+		return (ft_strlen(src));
+	while (src[i] && i < dstsize - 1)
 	{
-		ft_memcpy(dst, src, dstsize - 1);
-		dst[dstsize - 1] = 0;
+		dst[i] = src[i];
+		i++;
 	}
-	return (src_len);
+	dst[i] = '\0';
+	return (ft_strlen(src));
 }
+/*
+   int main(void)
+   {
+   char    *src = "abcdef";
+   char    *dst;
+
+   dst = strdup("ghijkl");
+   printf("%s\n", src);
+   printf("%s\n", dst);
+   printf("%c\n", (int)strlcpy(dst, src, 5));
+   printf("%s\n", src);
+   printf("%s\n", dst);
+   return (0);
+   }*/

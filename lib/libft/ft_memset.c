@@ -3,24 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 17:51:33 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/02/21 18:19:03 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/03 20:46:59 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/23 20:34:56 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./libft.h"
 
 void	*ft_memset(void *b, int c, size_t len)
 {
-	char	*p;
+	size_t			i;
+	unsigned char	*s;
 
-	p = (char *)b;
+	s = b;
+	i = 0;
 	while (len > 0)
 	{
-		p[len - 1] = c;
+		s[i] = c;
 		len--;
+		i++;
 	}
 	return (b);
 }
+/*
+   int main(void)
+   {
+   char *str;
+
+   str = ft_strdup("hellohello");
+   ft_memset(str, 32, 5);
+   printf("%s\n", str);
+   return (0);
+   }
+   */

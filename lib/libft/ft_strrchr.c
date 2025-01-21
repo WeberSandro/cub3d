@@ -3,31 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/23 19:21:05 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/02/23 19:22:23 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/03 22:22:14 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/23 20:34:56 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
-	unsigned int	i;
-	char			*res;
-	char			cc;
+	int				len;
+	unsigned char	search;
 
-	cc = (char) c;
-	res = NULL;
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == cc)
-			res = (char *) &s[i];
-		i++;
-	}
-	if (s[i] == cc)
-		res = (char *) &s[i];
-	return (res);
+	search = (unsigned char)c;
+	len = ft_strlen(s);
+	while (len > 0 && s[len] != search)
+		len--;
+	if (s[len] == search)
+		return ((char *)s + len);
+	else
+		return (NULL);
 }
+/*
+int	main(void)
+{
+	const   char *s = "tripouille";
+	//int     c = 65;
+
+	printf("%s\n", strrchr(s, 't' + 256));
+	printf("%s\n", ft_strrchr(s, 't' + 256));
+	return (0);
+}*/

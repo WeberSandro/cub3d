@@ -3,54 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <tlima-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/08 19:01:47 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/03/13 18:28:13 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/13 20:12:10 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/26 00:30:22 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	check_type(const char input, va_list args)
+int	ft_printf(const char *format, ...)
 {
-	int	i;
+	int		len;
+	va_list	args;
 
-	i = 0;
-	if (input == 'c')
-		i += print_char(va_arg(args, int));
-	else if (input == 's')
-		i += print_string(va_arg(args, char *));
-	else if (input == 'p')
-		i += print_pointer(va_arg(args, unsigned long), 87);
-	else if (input == 'd' || input == 'i')
-		i += print_int(va_arg(args, int));
-	else if (input == 'u')
-		i += print_unsigned(va_arg(args, unsigned int));
-	else if (input == 'x')
-		i += print_hex(va_arg(args, unsigned int), 87);
-	else if (input == 'X')
-		i += print_hex(va_arg(args, unsigned int), 55);
-	else if (input == '%')
-		i += print_char('%');
-	return (i);
-}
-
-int	ft_printf(const char *input, ...)
-{
-	unsigned int	i;
-	va_list			args;
-
-	i = 0;
-	va_start(args, input);
-	while (*input != '\0')
+	len = 0;
+	va_start(args, format);
+	if (format[len] == '%' && format[len + 1] == '\0')
+		return (0);
+	while (*format)
 	{
-		if (*input == '%')
-			i += check_type(*(++input), args);
+		if (*format == '%')
+		{
+			format++;
+			len += ft_format(format++, args);
+		}
 		else
-			i += print_char(*input);
-		input++;
+		{
+			ft_putchar_printf(*format, 1);
+			format++;
+			len++;
+		}
+		if (*format == '\0')
+			break ;
 	}
 	va_end(args);
-	return (i);
+	return (len);
 }
+
+/*
+int	main(void)
+{
+
+	char	*tab = "test";
+	char	*vide = "";
+	char	*null = NULL;
+        printf("char %c int %d str %s uint %u hex %x pointeur %p\n",
+       	'A', 456, "test", -123456, 1245, &tab);
+	ft_printf("char %c int %d str %s uint %u hex %x pointeur %p\n",
+       	'A', 456, "test", -123456, 1245, &tab);
+
+	printf("test 2 : str vide %s\n", vide);
+        ft_printf("test 2 : str vide %s\n", vide);
+	ft_printf("%p\n", null);
+	printf("%p\n", null);
+
+
+	//printf(" %c ", '0');
+	//ft_printf(" %c ", '0');
+
+	//int	i = 0;
+	//i = ft_printf("%d, %d", -10, 20);
+	//ft_printf("\n%d", i);
+
+	ft_printf("%");
+	//printf("%");
+	return (0);
+	
+}*/

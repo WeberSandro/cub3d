@@ -3,56 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 18:54:39 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/03/21 18:54:42 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/25 14:13:37 by sleleu            #+#    #+#             */
+/*   Updated: 2022/09/24 19:57:46 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "./libft.h"
 
-size_t	ft_strlen(const char *str)
+char	*ft_gnl_strjoin(char *s1, char *s2)
 {
-	size_t	i;
+	int		size;
+	int		i;
+	char	*str;
 
 	i = 0;
-	while (*str++)
+	size = (ft_gnl_strlen(s1) + ft_gnl_strlen(s2));
+	str = malloc(sizeof(char) * size + 1);
+	if (str == NULL)
+		return (NULL);
+	while (s1 && s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (*s2)
+	{
+		str[i] = *s2;
+		i++;
+		s2++;
+	}
+	str[size] = '\0';
+	free(s1);
+	return (str);
+}
+
+int	ft_gnl_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str && str[i])
 		i++;
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_gnl_strchr(char *s, int c)
 {
-	char	*result;
-	int		i;
+	int				i;
+	unsigned char	search;
 
-	result = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * 1);
-	if (!result)
-		return (NULL);
+	search = (unsigned char)c;
 	i = 0;
-	while (s1[i])
-	{
-		result[i] = s1[i];
+	while (s[i] && s[i] != search)
 		i++;
-	}
-	while (*s2)
-		result[i++] = *s2++;
-	result[i] = '\0';
-	free(s1);
-	return (result);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	c = (char)c;
-	while (*s)
-	{
-		if (*s == c)
-			return ((char *)s);
-		s++;
-	}
-	if (*s == c)
-		return ((char *)s);
-	return (NULL);
+	if (s[i] == search)
+		return ((char *)s + i);
+	else
+		return (NULL);
 }

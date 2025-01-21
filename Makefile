@@ -3,20 +3,21 @@ NAME = cub3d
 
 # Compilador e flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Ilib/minilibx-linux -Ilib/libft
+CFLAGS = -Wall -Wextra -Werror -Ilib/minilibx-linux -Ilib/libft -Iinclude -no-pie -g
 
 # Diretórios
-SRCS_DIR = src
+SRCS_DIRS = src map player render utills textures
 OBJS_DIR = obj
 LIBMLX_DIR = lib/minilibx-linux
 LIBFT_DIR = lib/libft
+ASSETS_DIR = asserts
 
 # Arquivos fontes e objetos
-SRCS = $(wildcard $(SRCS_DIR)/*.c)
-OBJS = $(patsubst $(SRCS_DIR)/%.c, $(OBJS_DIR)/%.o, $(SRCS))
+SRCS = $(shell find $(SRCS_DIRS) -type f -name '*.c')
+OBJS = $(patsubst %.c, $(OBJS_DIR)/%.o, $(SRCS))
 
 # Bibliotecas
-LIBS = -L$(LIBMLX_DIR) -lmlx -lm -lX11 -lXext -L$(LIBFT_DIR) -lft
+LIBS = -L$(LIBMLX_DIR) -lmlx -lm -lX11 -lXext -lbsd -L$(LIBFT_DIR) -lft
 
 # Cores para saída
 RESET = \033[0m
@@ -42,10 +43,16 @@ $(LIBMLX_DIR)/libmlx.a:
 	@printf "$(CYAN)Compiling MinilibX...$(RESET)\n"
 	@make -C $(LIBMLX_DIR)
 
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
-	@mkdir -p $(OBJS_DIR)
+$(OBJS_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
 	@printf "$(BLUE)Compiling $<...$(RESET)\n"
 	$(CC) $(CFLAGS) -c $< -o $@
+
+valgrind: $(NAME)
+	@printf "$(CYAN)Running Valgrind on $(NAME)...$(RESET)\n"
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file=valgrind-report.txt ./$(NAME) asserts/maps/level1.cub
+	@printf "$(GREEN)Valgrind finished. Check valgrind-report.txt for details.$(RESET)\n"
+
 
 clean:
 	@printf "$(RED)Cleaning objects...$(RESET)\n"

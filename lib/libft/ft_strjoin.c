@@ -3,37 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rvrignon <rvrignon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/28 17:42:54 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/02/28 18:29:53 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/03 20:52:13 by sleleu            #+#    #+#             */
+/*   Updated: 2022/12/30 19:35:24 by rvrignon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+#include "./libft.h"
+
+char	*ft_strjoin(char *s1, char *s2)
 {
+	int		size;
+	int		i;
 	char	*str;
-	size_t	i;
-	size_t	lens1;
-	size_t	lens2;
 
-	lens1 = ft_strlen(s1);
-	lens2 = ft_strlen(s2);
-	str = (char *)malloc((lens1 + lens2 + 1) * sizeof(char));
 	i = 0;
-	while (s1[i] != '\0')
+	size = (ft_strlen(s1) + ft_strlen(s2));
+	str = malloc(sizeof(char) * size + 1);
+	str[size] = '\0';
+	if (str == NULL)
+		return (NULL);
+	while (s1 && *s1)
 	{
-		str[i] = s1[i];
+		str[i] = *s1;
 		i++;
+		s1++;
 	}
-	i = 0;
-	while (s2[i])
+	while (s2 && *s2)
 	{
-		str[lens1] = s2[i];
-		lens1++;
+		str[i] = *s2;
 		i++;
+		s2++;
 	}
-	str[lens1] = '\0';
 	return (str);
 }

@@ -3,18 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/20 19:07:42 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/02/20 19:29:56 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/03 20:31:47 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/23 20:34:56 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./libft.h"
 
-int	ft_isdigit(int i)
+int	ft_isdigit(int c)
 {
-	while ('0' <= i && i <= '9')
+	if (c >= 48 && c <= 57)
 		return (1);
 	return (0);
 }
+/*
+   int main(void)
+   {
+   int    c = 'a';
+   printf("%d\n", ft_isdigit(c));
+   printf("%d\n", isdigit(c));
+   return (0);
+   }
+   */

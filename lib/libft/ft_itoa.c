@@ -3,66 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 19:15:06 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/03/01 19:36:48 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/03 20:37:31 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/23 20:34:56 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-size_t	ft_negative_num(size_t *len, size_t *sig, int n)
+#include "./libft.h"
+
+static int	ft_size(long int nbr)
 {
-	size_t	nbr;
+	int	size;
 
-	if (n < 0)
+	size = 0;
+	if (nbr == 0)
 	{
-		if (n == -2147483647 - 1)
-			nbr = 1 + (size_t)2147483647;
-		else
-			nbr = -n;
-		*len += 1;
-		*sig = 1;
+		size = 1;
+		return (size);
 	}
-	else
-		nbr = n;
-	return (nbr);
-}
-
-static size_t	ft_leng(int n)
-{
-	size_t	len;
-
-	n /= 10;
-	len = 1;
-	while (n)
+	if (nbr < 0)
 	{
-		n /= 10;
-		len++;
+		size++;
+		nbr = nbr * -1;
 	}
-	return (len);
+	while (nbr > 0)
+	{
+		size++;
+		nbr = nbr / 10;
+	}
+	return (size);
 }
 
 char	*ft_itoa(int n)
 {
-	size_t	len;
-	size_t	sig;
-	size_t	nbr;	
-	char	*str;
+	char			*str;
+	long int		nbr;
+	int				size;
 
-	len = ft_leng(n);
-	sig = 0;
-	nbr = ft_negative_num(&len, &sig, n);
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (!str)
+	nbr = n;
+	size = ft_size(nbr);
+	str = ft_calloc(sizeof(char), size + 1);
+	if (str == NULL)
 		return (NULL);
-	if (sig)
-		*str = '-';
-	str[len] = '\0';
-	while (sig < len--)
+	size--;
+	if (nbr == 0)
+		str[0] = '0';
+	if (nbr < 0)
 	{
-		str[len] = (char)(nbr % 10 + '0');
-		nbr /= 10;
+		str[0] = '-';
+		nbr = nbr * -1;
+	}
+	while (nbr > 0)
+	{
+		str[size] = (nbr % 10) + 48;
+		nbr = nbr / 10;
+		size--;
 	}
 	return (str);
 }
+/*
+int	main(void)
+{
+	char    *str;
+
+	str = ft_itoa(1245);
+	printf("%s\n", str);
+	free(str);
+	return (0);
+}*/

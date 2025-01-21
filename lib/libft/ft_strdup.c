@@ -3,25 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/25 14:19:41 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/02/25 14:19:49 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/03 20:51:13 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/23 20:34:56 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./libft.h"
 
-char	*ft_strdup(const char *src)
+char	*ft_strdup(const char *s1)
 {
-	size_t	size;
-	char	*dest;
+	char	*tab;
+	int		size;
+	int		i;
 
-	size = ft_strlen(src);
-	dest = (char *)malloc(size * sizeof(char) + 1);
-	if (dest == NULL)
-		return (0);
-	ft_memcpy(dest, src, size);
-	dest[size] = '\0';
-	return (dest);
+	size = 0;
+	i = 0;
+	while (s1[size])
+		size++;
+	tab = malloc(sizeof(char) * size + 1);
+	if (tab == NULL)
+		return (NULL);
+	while (s1[i])
+	{
+		tab[i] = s1[i];
+		i++;
+	}
+	tab[i] = '\0';
+	return (tab);
 }
+/*
+   int     main(void)
+   {
+   char    *s1 = "Hello test test";
+   char    *tab;
+
+   tab = ft_strdup(s1);
+   printf("copy = %s\n", tab);
+   printf("original = %s\n", s1);
+   free(tab);
+   }
+   */

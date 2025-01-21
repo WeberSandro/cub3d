@@ -3,57 +3,99 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 18:10:32 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/03/04 18:11:44 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/03 20:48:25 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/23 20:34:56 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-static size_t	ft_len_word(char const *s, char c)
+#include "./libft.h"
+
+static int	ft_count(char const *s, char c)
 {
-	size_t	count;
+	int	i;
+	int	count;
 
-	if (!*s)
-		return (0);
+	i = 0;
 	count = 0;
-	while (*s)
+	while (s[i] != '\0')
 	{
-		while (*s == c)
-			s++;
-		if (*s)
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] && s[i] != c)
 			count++;
-		while (*s != c && *s)
-			s++;
+		while (s[i] && s[i] != c)
+			i++;
 	}
 	return (count);
 }
 
+static char	*ft_word(char const *s, char c)
+{
+	int		i;
+	int		size;
+	char	*word;
+
+	i = 0;
+	size = 0;
+	while (s[size] && s[size] != c)
+		size++;
+	word = ft_calloc(sizeof(char), size + 1);
+	if (word == NULL)
+		return (NULL);
+	while (i < size)
+	{
+		word[i] = s[i];
+		i++;
+	}
+	return (word);
+}
+
 char	**ft_split(char const *s, char c)
 {
-	char	**lst;
-	size_t	word_len;
 	int		i;
+	int		count;
+	char	**tab;
 
-	lst = (char **)malloc((ft_len_word(s, c) + 1) * sizeof(char *));
-	if (!s || !lst)
-		return (0);
 	i = 0;
+	count = ft_count(s, c);
+	tab = ft_calloc(sizeof(char *), count + 1);
+	if (tab == NULL)
+		return (NULL);
 	while (*s)
 	{
-		while (*s == c && *s)
+		while (*s && *s == c)
 			s++;
-		if (*s)
+		if (*s && *s != c)
 		{
-			if (!ft_strchr(s, c))
-				word_len = ft_strlen(s);
-			else
-				word_len = ft_strchr(s, c) - s;
-			lst[i++] = ft_substr(s, 0, word_len);
-			s += word_len;
+			tab[i] = ft_word(s, c);
+			i++;
 		}
+		while (*s && *s != c)
+			s++;
 	}
-	lst[i] = NULL;
-	return (lst);
+	return (tab);
 }
+/*
+int	main(int argc, char ** argv)
+{
+	int	i;
+	char	**tab;
+
+	tab = ft_split(argv[1], '/');
+	i = 0;
+	while (tab[i])
+	{
+		printf("%s\n", tab[i]);
+		i++;
+	}
+	i = 0;
+	while (i < argc)
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+	return (0);
+}*/

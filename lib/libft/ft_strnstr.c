@@ -3,37 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/25 14:23:31 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/02/25 14:23:35 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/04 16:52:26 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/23 20:34:56 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./libft.h"
 
-char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
-	size_t	j;
 
 	i = 0;
-	j = 0;
-	if (needle == NULL || needle[0] == '\0')
-		return ((char *)haystack);
-	while (haystack[i] != '\0' && i < n)
+	if (*little == '\0')
+		return ((char *)big);
+	while (big[i] && i < len)
 	{
-		if (haystack[i] == needle[j])
+		if (big[i] == *little)
 		{
-			while (haystack[i + j] == needle[j] && i + j < n)
-			{
-				if (needle[j + 1] == '\0')
-					return ((char *)haystack + i);
-				j++;
-			}
-			j = 0;
-		}	
+			if (ft_strncmp(big + i, little, ft_strlen(little)) == 0
+				&& ft_strlen(little) + i <= len)
+				return ((char *)big + i);
+		}
 		i++;
 	}
-	return (NULL);
+	return (0);
 }
+/*
+int	main(void)
+{
+	const char *l = "aaabcabcd";
+	const char *s = "cd";
+	char *ptr;
+
+	ptr = ft_strnstr(l, s, 9);
+	printf("%s\n", ptr);
+	return (0);
+}*/

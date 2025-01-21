@@ -3,30 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/02 15:40:26 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/03/02 16:01:10 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/05 18:17:39 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/23 20:34:56 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
+
+#include "./libft.h"
+
+/*
+char	ft_antoine(unsigned int antoine, char c)
+{
+	c = c + antoine;
+	return (c);
+}
+*/
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	size_t	length;
-	size_t	index;
-	char	*str;
+	unsigned int	i;
+	char			*map;
 
-	length = ft_strlen(s);
-	index = 0;
-	str = (char *)malloc(sizeof(char) * (length + 1));
-	if (!str)
+	i = 0;
+	map = ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	if (map == NULL)
 		return (NULL);
-	while (index < length)
+	while (i < ft_strlen(s))
 	{
-		str[index] = f(index, s[index]);
-		index++;
+		map[i] = (*f)(i, s[i]);
+		i++;
 	}
-	str[length] = '\0';
-	return (str);
+	return (map);
 }
+/*
+int	main(void)
+{
+	char	*s = "abcd";
+	printf("%s\n", ft_strmapi(s, &ft_antoine));
+	return  (0);
+}
+*/

@@ -3,118 +3,110 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rvrignon <rvrignon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 18:53:54 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/03/21 18:53:57 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/25 14:15:13 by sleleu            #+#    #+#             */
+/*   Updated: 2022/09/13 20:53:34 by rvrignon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "./libft.h"
 
-static char	*ft_read(int int_fd, char *full_line)
+char	*ft_get_line(char *line)
 {
-	char	*buffer;
-	int		nbr_bytes_read;
-
-	buffer = malloc(BUFFER_SIZE + 1);
-	nbr_bytes_read = 1;
-	while (nbr_bytes_read != 0)
-	{
-		nbr_bytes_read = read(int_fd, buffer, BUFFER_SIZE);
-		if (nbr_bytes_read == -1)
-		{
-			free(buffer);
-			free(full_line);
-			return (0);
-		}
-		buffer[nbr_bytes_read] = '\0';
-		full_line = ft_strjoin(full_line, buffer);
-		if (ft_strchr(full_line, '\n'))
-			break ;
-	}
-	free(buffer);
-	return (full_line);
-}
-
-static char	*ft_return_line(char *full_line)
-{
-	int		i;
-	char	*line_2b_printed;
+	int	i;
 
 	i = 0;
-	line_2b_printed = "";
-	if (!full_line)
-		return (NULL);
-	while (full_line[i] && full_line[i] != '\n')
+	while (line[i] && line[i] != '\n')
 		i++;
-	line_2b_printed = malloc((i + 2) * 1);
-	if (!line_2b_printed)
-		return (NULL);
-	i = 0;
-	while (full_line[i] && full_line[i] != '\n')
-	{
-		line_2b_printed[i] = full_line[i];
-		i++;
-	}
-	if (full_line[i] == '\n')
-	{
-		line_2b_printed[i] = full_line[i];
-		i++;
-	}
-	line_2b_printed[i] = '\0';
-	return (line_2b_printed);
-}
-
-static char	*ft_keep_rest(char *full_line)
-{
-	int		i;
-	int		j;
-	char	*rest;
-
-	i = 0;
-	while (full_line[i] && full_line[i] != '\n')
-		i++;
-	if ((full_line[i] == '\n' && full_line[i + 1] == '\0') || !full_line[i])
-	{
-		free(full_line);
-		return (NULL);
-	}
-	rest = malloc((ft_strlen(full_line) - i + 1) * 1);
-	if (!rest)
-		return (NULL);
 	i++;
+	line[i] = '\0';
+	return (line);
+}
+
+char	*ft_get_endline(char *line, char *buff)
+{
+	int	i;
+	int	j;
+
+	i = 0;
 	j = 0;
-	while (full_line[i])
-		rest[j++] = full_line[i++];
-	rest[j] = '\0';
-	free(full_line);
-	return (rest);
+	while (line[i] && line[i] != '\n')
+		i++;
+	if (line[i] == '\n')
+	{
+		i++;
+		while (line[i])
+		{
+			buff[j] = line[i];
+			i++;
+			j++;
+		}
+	}
+	buff[j] = '\0';
+	return (buff);
+}
+
+char	*ft_read_line(int fd, char *line, char *buff)
+{
+	int	return_value;
+
+	return_value = 1;
+	line = ft_gnl_strjoin(line, buff);
+	while (!ft_gnl_strchr(line, '\n') && return_value != 0)
+	{
+		return_value = read(fd, buff, BUFFER_SIZE);
+		if (return_value < 0)
+			return (NULL);
+		buff[return_value] = '\0';
+		line = ft_gnl_strjoin(line, buff);
+	}
+	if (ft_strchr(line, '\n'))
+	{
+		buff = ft_get_endline(line, buff);
+		line = ft_get_line(line);
+	}
+	if (line == NULL)
+		return (NULL);
+	return (line);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*full_line;
-	char		*line_2b_printed;
+	static char	buff[BUFFER_SIZE + 1];
+	char		*line;
 
-	line_2b_printed = "";
-	if ((fd < 0) || (BUFFER_SIZE <= 0))
+	line = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buff, 0) == -1)
 		return (NULL);
-	if (!full_line)
+	line = ft_read_line(fd, line, buff);
+	if (line[0] == '\0')
 	{
-		full_line = malloc(1);
-		full_line[0] = '\0';
+		free(line);
+		return (NULL);
 	}
-	full_line = ft_read(fd, full_line);
-	if (full_line == 0)
-		return (full_line);
-	if (!*full_line)
-	{
-		free(full_line);
-		full_line = NULL;
-		return (full_line);
-	}
-	line_2b_printed = ft_return_line(full_line);
-	full_line = ft_keep_rest(full_line);
-	return (line_2b_printed);
+	return (line);
 }
+/*
+int	main(void)
+{
+	int		fd;
+	int		i = 0;
+	int		number_of_lines = 15;
+	char	*str;
+
+	fd = open("./file", O_RDONLY);
+	if (fd >= 0)
+	{
+		while (i < number_of_lines)
+		{
+			str = get_next_line(fd);
+//			printf("RESULT Line %d = %s", i + 1, str);
+			if (i < number_of_lines)
+				free(str);
+			i++;
+		}
+		close(fd);
+	}
+	return (0);
+}*/

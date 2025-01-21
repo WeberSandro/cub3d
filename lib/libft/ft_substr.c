@@ -3,51 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 18:27:29 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/02/26 19:41:39 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/04 20:35:36 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/23 20:34:56 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-static size_t	ft_min(size_t start, size_t len)
-{
-	if (start < len)
-		return (start);
-	return (len);
-}
-
-static char	*empty_string(void)
-{
-	char	*result;
-
-	result = malloc(1);
-	if (result)
-		result[0] = 0;
-	return (result);
-}
+#include "./libft.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	size_t	s_len;
-	char	*str;
+	char	*tab;
+	size_t	i;
 
-	s_len = ft_strlen(s);
-	if (start >= s_len)
-	{
-		str = empty_string();
-		if (!str)
-			return (NULL);
-		return (str);
-	}
-	s_len -= (size_t)start;
-	if (len > s_len)
-		len = s_len;
-	len = ft_min(s_len, len);
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (!str)
+	i = 0;
+	if (len > ft_strlen(s))
+		len = ft_strlen(s);
+	if (start + len > ft_strlen(s))
+		len = len - start;
+	if (start > ft_strlen(s))
+		len = 0;
+	tab = ft_calloc(len + 1, sizeof(char));
+	if (tab == NULL)
 		return (NULL);
-	ft_strlcpy(str, s + start, len + 1);
-	return (str);
+	while (i < len && s[start])
+	{
+		tab[i] = s[start];
+		i++;
+		start++;
+	}
+	return (tab);
 }
+/*
+int	main(void)
+{
+	printf("%s\n", ft_substr("tripouille", 0, 42000));
+	return (0);
+}*/

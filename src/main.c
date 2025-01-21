@@ -3,28 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tales <tales@student.42.fr>                +#+  +:+       +#+        */
+/*   By: sanweber <sanweber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:01:12 by tlima-de          #+#    #+#             */
-/*   Updated: 2025/01/06 22:10:02 by tales            ###   ########.fr       */
+/*   Updated: 2025/01/21 09:52:59 by sanweber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//Função principal
+#include "cub3d.h"
+#include "player.h"   // Para key_press e key_release
+#include "render.h"   // Para draw_loop
+#include "map.h"      // Inclua este cabeçalho para acessar free_map
 
-#include "mlx.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-int main()
+// Callback para o evento de fechamento da janela
+int exit_program(t_game *game)
 {
-    void *mlx;
-    void *win;
-    
-    mlx = mlx_init();//inicializa a conexão com o servidor gráfico
-    win = mlx_new_window(mlx, 800, 600, "Cub3d");//tamanho da janela mais o título
-    mlx_pixel_put(mlx, win, 400, 300, 0x00FF0000);//posição do pixel x, y, cor
-    mlx_loop(mlx);//loop para manter a janela aberta
+    free_map(game->map);
+    exit(0); // Encerra o programa
+    return 0;
+}
 
-    return (0);
+int main(void)
+{
+    t_game game;
+
+    // Inicializa o jogo
+    init_game(&game);
+    
+    // Associa o evento de fechamento ao callback
+    mlx_hook(game.win, 17, 0, exit_program, &game);
+
+    // Configura eventos de teclado
+    mlx_hook(game.win, 2, 1L << 0, key_press, &game.player);
+    mlx_hook(game.win, 3, 1L << 1, key_release, &game.player);
+
+    // Loop principal
+    mlx_loop_hook(game.mlx, draw_loop, &game);
+    mlx_loop(game.mlx);
+
+    // Libera recursos antes de sair * foi transferido para draw_loop (ESC)
+    //free_map(game.map); // Certifique-se de liberar apenas uma vez
+
+    return 0;
 }

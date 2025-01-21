@@ -3,37 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 19:26:23 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/02/21 19:33:48 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/03 12:07:47 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/23 20:34:56 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "./libft.h"
 
-void	*ft_memmove(void *s1, const void *s2, size_t n)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t	len;
+	unsigned char			*d;
+	const unsigned char		*s;
+	int						i;
 
-	len = 0;
-	if (s2 < s1)
+	d = dst;
+	s = src;
+	if (d > s)
 	{
-		len = n;
-		while (len > 0)
+		i = (int)len - 1;
+		while (i >= 0)
 		{
-			len--;
-			((unsigned char *)s1)[len] = ((unsigned char *)s2)[len];
+			d[i] = s[i];
+			i--;
 		}
 	}
 	else
 	{
-		len = 0;
-		while (len < n)
+		i = 0;
+		while (i < (int)len)
 		{
-			((unsigned char *)s1)[len] = ((unsigned char *)s2)[len];
-			len++;
+			d[i] = s[i];
+			i++;
 		}
 	}
-	return (s1);
+	return (dst);
 }
+/*
+   int main(void)
+   {
+   char    *dst, *src;
+
+   src = strdup("123456");
+   dst = strdup("abcdef");
+   ft_memmove(dst, src, 4);
+   printf("%s\n", dst);
+   return (0);
+   }
+   */

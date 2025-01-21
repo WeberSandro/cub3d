@@ -3,17 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sleleu <sleleu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/23 18:04:40 by tlima-de          #+#    #+#             */
-/*   Updated: 2024/02/23 18:05:46 by tlima-de         ###   ########.fr       */
+/*   Created: 2022/05/02 14:18:18 by sleleu            #+#    #+#             */
+/*   Updated: 2022/11/23 20:34:56 by sleleu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-int	ft_tolower(int i)
+#include "./libft.h"
+
+int	ft_tolower(int c)
 {
-	if (i >= 'A' && i <= 'Z')
-		return (i + 32);
-	return (i);
+	if (c >= 65 && c <= 90)
+		c += 32;
+	return (c);
 }
+
+/*
+int	main(void)
+{
+	printf("%d\n", ft_tolower('E'));
+	printf("%d\n", tolower('E'));
+	return (0);
+}*/
