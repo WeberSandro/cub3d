@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <tlima-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sanweber <sanweber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 22:00:26 by tales             #+#    #+#             */
-/*   Updated: 2025/01/20 12:37:43 by tlima-de         ###   ########.fr       */
+/*   Updated: 2025/02/13 12:04:11 by sanweber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "map.h"     // Para a função load_map
 
 
-void init_game(t_game *game)
+void init_game(t_game *game, char map[MAX_MAP_LINES][MAX_LINE])
 {
     // Inicializar o MiniLibX
     game->mlx = mlx_init();
@@ -30,7 +30,8 @@ void init_game(t_game *game)
     init_player(&game->player);
 
     // Carregar o mapa e as texturas
-    load_map("asserts/maps/level1.cub", game);
+    //load_map("asserts/maps/level1.cub", game);
+    load_map(map, game);
     load_images(game->mlx, &game->textures);
 
     // Depurar texturas (opcional)
@@ -51,7 +52,7 @@ void init_game(t_game *game)
         fprintf(stderr, "Error: Failed to create an image.\n");
         exit(1);
     }
-
+    
     // Obter o endereço da imagem
     game->data = mlx_get_data_addr(game->img, &game->bpp, &game->size_line, &game->endian);
     if (!game->data)

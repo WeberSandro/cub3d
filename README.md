@@ -262,163 +262,101 @@ Error
 ```
 
 ```
-cub3d
-├─ LICENSE
-├─ Makefile
-├─ README.md
-├─ asserts
-│  ├─ maps
-│  │  ├─ level1.cub
-│  │  └─ level2.cub
-│  └─ textures
-│     ├─ 3.xpm
-│     ├─ 4.xpm
-│     ├─ q1.xpm
-│     ├─ q2.xpm
-│     ├─ q3.xpm
-│     └─ q4.xpm
-├─ include
-│  ├─ cub3d.h
-│  ├─ map.h
-│  ├─ player.h
-│  ├─ render.h
-│  └─ utils.h
-├─ lib
-│  ├─ libft
-│  │  ├─ Makefile
-│  │  ├─ ft_atoi.c
-│  │  ├─ ft_bzero.c
-│  │  ├─ ft_calloc.c
-│  │  ├─ ft_format.c
-│  │  ├─ ft_isalnum.c
-│  │  ├─ ft_isalpha.c
-│  │  ├─ ft_isascii.c
-│  │  ├─ ft_isdigit.c
-│  │  ├─ ft_isprint.c
-│  │  ├─ ft_itoa.c
-│  │  ├─ ft_lstadd_back.c
-│  │  ├─ ft_lstadd_front.c
-│  │  ├─ ft_lstclear.c
-│  │  ├─ ft_lstdelone.c
-│  │  ├─ ft_lstiter.c
-│  │  ├─ ft_lstlast.c
-│  │  ├─ ft_lstmap.c
-│  │  ├─ ft_lstnew.c
-│  │  ├─ ft_lstsize.c
-│  │  ├─ ft_memchr.c
-│  │  ├─ ft_memcmp.c
-│  │  ├─ ft_memcpy.c
-│  │  ├─ ft_memmove.c
-│  │  ├─ ft_memset.c
-│  │  ├─ ft_printf.c
-│  │  ├─ ft_printf.h
-│  │  ├─ ft_putchar_fd.c
-│  │  ├─ ft_putchar_printf.c
-│  │  ├─ ft_putendl_fd.c
-│  │  ├─ ft_putnbr_fd.c
-│  │  ├─ ft_putnbr_printf.c
-│  │  ├─ ft_putstr_fd.c
-│  │  ├─ ft_putstr_printf.c
-│  │  ├─ ft_split.c
-│  │  ├─ ft_strchr.c
-│  │  ├─ ft_strdup.c
-│  │  ├─ ft_striteri.c
-│  │  ├─ ft_strjoin.c
-│  │  ├─ ft_strlcat.c
-│  │  ├─ ft_strlcpy.c
-│  │  ├─ ft_strlen.c
-│  │  ├─ ft_strmapi.c
-│  │  ├─ ft_strncmp.c
-│  │  ├─ ft_strnstr.c
-│  │  ├─ ft_strrchr.c
-│  │  ├─ ft_strtrim.c
-│  │  ├─ ft_substr.c
-│  │  ├─ ft_tolower.c
-│  │  ├─ ft_toupper.c
-│  │  ├─ get_next_line.c
-│  │  ├─ get_next_line_utils.c
-│  │  └─ libft.h
-│  └─ minilibx-linux
-│     ├─ .github
-│     │  └─ workflows
-│     │     └─ ci.yml
-│     ├─ .gitignore
-│     ├─ LICENSE
-│     ├─ Makefile
-│     ├─ Makefile.gen
-│     ├─ Makefile.mk
-│     ├─ README.md
-│     ├─ configure
-│     ├─ man
-│     │  ├─ man1
-│     │  │  ├─ mlx.1
-│     │  │  ├─ mlx_loop.1
-│     │  │  ├─ mlx_new_image.1
-│     │  │  ├─ mlx_new_window.1
-│     │  │  └─ mlx_pixel_put.1
-│     │  └─ man3
-│     │     ├─ mlx.3
-│     │     ├─ mlx_loop.3
-│     │     ├─ mlx_new_image.3
-│     │     ├─ mlx_new_window.3
-│     │     └─ mlx_pixel_put.3
-│     ├─ mlx.h
-│     ├─ mlx_clear_window.c
-│     ├─ mlx_destroy_display.c
-│     ├─ mlx_destroy_image.c
-│     ├─ mlx_destroy_window.c
-│     ├─ mlx_expose_hook.c
-│     ├─ mlx_ext_randr.c
-│     ├─ mlx_flush_event.c
-│     ├─ mlx_get_color_value.c
-│     ├─ mlx_get_data_addr.c
-│     ├─ mlx_hook.c
-│     ├─ mlx_init.c
-│     ├─ mlx_int.h
-│     ├─ mlx_int_anti_resize_win.c
-│     ├─ mlx_int_do_nothing.c
-│     ├─ mlx_int_get_visual.c
-│     ├─ mlx_int_param_event.c
-│     ├─ mlx_int_set_win_event_mask.c
-│     ├─ mlx_int_str_to_wordtab.c
-│     ├─ mlx_int_wait_first_expose.c
-│     ├─ mlx_key_hook.c
-│     ├─ mlx_lib_xpm.c
-│     ├─ mlx_loop.c
-│     ├─ mlx_loop_hook.c
-│     ├─ mlx_mouse.c
-│     ├─ mlx_mouse_hook.c
-│     ├─ mlx_new_image.c
-│     ├─ mlx_new_window.c
-│     ├─ mlx_pixel_put.c
-│     ├─ mlx_put_image_to_window.c
-│     ├─ mlx_rgb.c
-│     ├─ mlx_screen_size.c
-│     ├─ mlx_set_font.c
-│     ├─ mlx_string_put.c
-│     ├─ mlx_xpm.c
-│     ├─ mlx_xpm.c.ok
-│     ├─ rgb2c.pl
-│     └─ test
-│        ├─ Makefile.gen
-│        ├─ Makefile.mk
-│        ├─ main.c
-│        ├─ new_win.c
-│        ├─ open.xpm
-│        ├─ open24.xpm
-│        ├─ open30.xpm
-│        └─ run_tests.sh
-├─ map
-│  └─ map.c
-├─ player
-│  └─ player.c
-├─ render
-│  └─ render.c
-├─ src
-│  ├─ init.c
-│  └─ main.c
-└─ utills
-   └─ utils.c
+## folta implementar
+O que já está implementado:
+Parser do Arquivo .cub:
+
+A leitura do arquivo .cub já está parcialmente implementada.
+As texturas são carregadas corretamente (NO, SO, WE, EA).
+As cores do teto e do chão são processadas corretamente com validação.
+O mapa é carregado linha por linha.
+Estruturação do Jogo:
+
+Estrutura básica do jogo (t_game, t_player, t_textures) está funcional.
+Inicialização do jogador com ângulo e posição definidos.
+Gerenciamento de eventos de teclado (key_press e key_release).
+Raycasting:
+
+O algoritmo de raycasting está implementado.
+As texturas são aplicadas nas paredes com base na direção do raio.
+Renderização:
+
+O sistema de renderização para o mapa 2D (draw_map) e 3D (raycasting) está funcional.
+Desenho de quadrados e linhas está implementado.
+Gerenciamento de Memória:
+
+Funções como free_map e free_split ajudam a liberar recursos alocados.
+MiniLibX:
+
+Uso correto de funções da MiniLibX para criar janelas e desenhar pixels.
+Makefile:
+
+Parece estar parcialmente funcional (embora não esteja incluso no código fornecido).
+O que está faltando implementar ou melhorar:
+Validação do Mapa:
+
+Certificar-se de que o mapa está "fechado" (não pode haver espaços abertos).
+Verificar se há apenas um ponto inicial (N, S, E, W).
+Garantir que o mapa contém apenas os caracteres permitidos (0, 1, N, S, E, W).
+Validar bordas do mapa (não podem ser espaços ou números inválidos).
+Sugestão: Adicionar uma função validate_map para verificar essas condições.
+
+Mensagem de Erro Melhorada:
+
+Quando um erro ocorre no .cub, deve ser exibida a mensagem Error\n seguida de uma descrição do problema.
+Gestão de Memória Completa:
+
+Certificar-se de que todas as texturas e alocações dinâmicas são liberadas corretamente no encerramento do programa.
+A função exit_program pode ser expandida para lidar com isso.
+Interação com a Janela:
+
+Implementar a funcionalidade para fechar a janela clicando no botão de fechar (gerenciamento de evento 17).
+Melhorar a minimização/restauração da janela para evitar problemas gráficos.
+Melhorias no Sistema de Colisão:
+
+Certificar-se de que o jogador não consegue atravessar paredes, mesmo em cantos ou bordas.
+Mapa de Depuração:
+
+Melhorar a visualização do mapa 2D para depuração (cores diferentes para jogador, paredes, etc.).
+Erros de Limites no Raycasting:
+
+Garantir que os raios não ultrapassem os limites do mapa.
+Makefile:
+
+Adicionar uma regra bonus caso queira incluir funcionalidades extras.
+Certificar-se de que ele compila corretamente sem relink.
+Diretórios e Organização:
+
+Separe as funções relacionadas ao jogador, mapa, renderização e utilitários em arquivos e diretórios distintos para melhorar a legibilidade e manutenção.
+Testes e Validação:
+
+Crie cenários de teste com diferentes mapas .cub para validar os casos de borda:
+Mapas válidos.
+Mapas com espaços não fechados.
+Mapas sem texturas ou cores definidas.
+Rotação de Câmera Suave:
+
+As rotações da câmera podem ser suavizadas para melhorar a experiência do usuário.
+Resolução Configurável:
+
+Permitir a configuração de resolução via arquivo .cub.
+Mensagens de Debug:
+
+Adicionar uma flag de debug para habilitar/desabilitar mensagens de depuração.
+Próximos Passos:
+Implementar as validações do mapa:
+
+Crie a função validate_map para assegurar que o mapa esteja correto.
+Adicionar a função exit_program completa:
+
+Libere todos os recursos corretamente ao sair do programa.
+Testar intensivamente:
+
+Utilize diferentes arquivos .cub para validar o comportamento do seu programa.
+Aprimorar mensagens de erro:
+
+Certifique-se de que todas as mensagens de erro sigam o formato Error\n e sejam claras.
+Se precisar de a
 
 
 

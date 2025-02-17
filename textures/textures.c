@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <tlima-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sanweber <sanweber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 11:19:07 by tlima-de          #+#    #+#             */
-/*   Updated: 2025/01/15 13:07:54 by tlima-de         ###   ########.fr       */
+/*   Updated: 2025/02/17 13:55:48 by sanweber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,25 @@
 
 void load_textures(const char *line, t_textures *textures)
 {
-    if (ft_strncmp(line, "NO ", 3) == 0)
-        textures->north = ft_strdup(line + 3); // Copia o caminho após "NO "
-    else if (ft_strncmp(line, "WE ", 3) == 0)
-        textures->west = ft_strdup(line + 3); // Copia o caminho após "WE "
-    else if (ft_strncmp(line, "SO ", 3) == 0)
-        textures->south = ft_strdup(line + 3); // Copia o caminho após "SO "
-    else if (ft_strncmp(line, "EA ", 3) == 0)
-        textures->east = ft_strdup(line + 3); // Copia o caminho após "EA "
+    if (ft_strncmp(line, "NO", 2) == 0)
+        textures->north = ft_strdup(line + 2); // Copia o caminho após "NO "
+    else if (ft_strncmp(line, "WE", 2) == 0)
+        textures->west = ft_strdup(line + 2); // Copia o caminho após "WE "
+    else if (ft_strncmp(line, "SO", 2) == 0)
+        textures->south = ft_strdup(line + 2); // Copia o caminho após "SO "
+    else if (ft_strncmp(line, "EA", 2) == 0)
+        textures->east = ft_strdup(line + 2); // Copia o caminho após "EA "
     else
     {
         fprintf(stderr, "Error: Invalid texture line\n");
         exit(EXIT_FAILURE);
     }
+    printf("passei aqui\n");
 }
 
 void parse_colors(const char *line, t_game *game)
-{
-    char **split = ft_split(line + 2, ','); // Divide valores após "F " ou "C "
+{    
+    char **split = ft_split(line + 1, ','); // Divide valores após "F " ou "C "
     if (!split || !split[0] || !split[1] || !split[2])
     {
         fprintf(stderr, "Error: Invalid color format\n");
@@ -60,19 +61,20 @@ void parse_colors(const char *line, t_game *game)
     for (int i = 0; split[i]; i++)
         free(split[i]);
     free(split);
+    printf("passei aqui nas cores\n");
 }
 
 void load_images(void *mlx, t_textures *textures)
 {
     int width, height;
 
-    textures->north = mlx_xpm_file_to_image(mlx, "asserts/textures/north.xpm", &width, &height);
+    textures->north = mlx_xpm_file_to_image(mlx, "asserts/textures/1.xpm", &width, &height);
+    
+    textures->south = mlx_xpm_file_to_image(mlx, "asserts/textures/2.xpm", &width, &height);
 
-    textures->south = mlx_xpm_file_to_image(mlx, "asserts/textures/south.xpm", &width, &height);
+    textures->east = mlx_xpm_file_to_image(mlx, "asserts/textures/3.xpm", &width, &height);
 
-    textures->east = mlx_xpm_file_to_image(mlx, "asserts/textures/east.xpm", &width, &height);
-
-    textures->west = mlx_xpm_file_to_image(mlx, "asserts/textures/west.xpm", &width, &height);
+    textures->west = mlx_xpm_file_to_image(mlx, "asserts/textures/4.xpm", &width, &height);
 
 if (!textures->north || !textures->south || !textures->east || !textures->west)
 {

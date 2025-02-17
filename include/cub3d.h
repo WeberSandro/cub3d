@@ -6,7 +6,7 @@
 /*   By: sanweber <sanweber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:58:38 by tlima-de          #+#    #+#             */
-/*   Updated: 2025/01/20 15:52:35 by sanweber         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:09:29 by sanweber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+//#include "map.h"
 
-typedef struct s_player {
+typedef struct s_player
+{
     float x;
     float y;
     float angle;
@@ -52,14 +54,19 @@ typedef struct s_player {
     bool key_esc;
 } t_player;
 
-typedef struct s_textures {
+typedef struct s_textures
+{
     void *north;
     void *south;
     void *east;
     void *west;
 } t_textures;
 
-typedef struct s_game {
+typedef struct s_game
+{
+    int MAP_HEIGHT;
+    int MAP_WIDTH; 
+    
     void *mlx;
     void *win;
     void *img;
@@ -76,8 +83,7 @@ typedef struct s_game {
     int ceiling_color;
 } t_game;
 
-
-void init_game(t_game *game);
+//void init_game(t_game *game, char map[MAX_MAP_LINES][MAX_LINE]);
 void debug_textures(t_textures *textures);
 
-#endif // CUB3D_H  
+#endif 

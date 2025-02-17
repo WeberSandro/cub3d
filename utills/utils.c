@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <tlima-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sanweber <sanweber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:04:37 by tlima-de          #+#    #+#             */
-/*   Updated: 2025/01/15 13:07:19 by tlima-de         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:18:52 by sanweber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,33 @@ float fixed_dist(float x1, float y1, float x2, float y2, t_game *game)
 {
     float delta_x = x2 - x1;
     float delta_y = y2 - y1;
-    float angle = atan2(delta_y, delta_x) - game->player.angle;
-    float fix_dist = distance(delta_x, delta_y) * cos(angle);
-    return fix_dist;
+    float angle_diff = atan2(delta_y, delta_x) - game->player.angle;
+
+    while (angle_diff < -PI)
+        angle_diff += 2 * PI;
+    while (angle_diff > PI)
+        angle_diff -= 2 * PI;
+
+    return sqrt(delta_x * delta_x + delta_y * delta_y) * cos(angle_diff);
 }
+
 
 int touch(float px, float py, t_game *game)
 {
+    if (!game || !game->map) // Ver se o game e o mapa são válidos ULTIMA COISA
+    {
+        printf("error game - touch \n"); // tirar, botei pra teste todo if
+        return 0;
+    }
+        
     int x = (int)(px / BLOCK);
     int y = (int)(py / BLOCK);
+
+    if (y < 0 || y >= game->MAP_HEIGHT || x < 0 || x >= game->MAP_WIDTH)
+    {
+        printf("error map - touch ok \n");  // tirar, botei pra teste todo if
+        return 0;
+    }
 
     if (game->map[y][x] == '1')
     {
@@ -61,6 +79,7 @@ void debug_textures(t_textures *textures)
     if (textures->west)
         printf("West texture loaded\n");
 }
+
 
 void free_split(char **split)
 {
