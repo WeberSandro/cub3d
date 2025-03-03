@@ -6,7 +6,7 @@
 /*   By: sanweber <sanweber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 14:58:38 by tlima-de          #+#    #+#             */
-/*   Updated: 2025/02/14 15:09:29 by sanweber         ###   ########.fr       */
+/*   Updated: 2025/02/27 17:22:28 by sanweber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,11 @@
 
 #define PI 3.14159265359
 
-#include "mlx.h"
+#include "../lib/minilibx-linux/mlx.h"  
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
-//#include "map.h"
 
 typedef struct s_player
 {
@@ -56,6 +55,10 @@ typedef struct s_player
 
 typedef struct s_textures
 {
+    void *no;
+    void *so;
+    void *ea;
+    void *we;
     void *north;
     void *south;
     void *east;
@@ -64,8 +67,8 @@ typedef struct s_textures
 
 typedef struct s_game
 {
-    int MAP_HEIGHT;
-    int MAP_WIDTH; 
+    int map_height;
+    int map_width; 
     
     void *mlx;
     void *win;
@@ -78,12 +81,11 @@ typedef struct s_game
 
     t_player player;
     char **map;
-    t_textures textures; // Adicione esta linha
+    t_textures textures; 
     int floor_color;
     int ceiling_color;
 } t_game;
 
-//void init_game(t_game *game, char map[MAX_MAP_LINES][MAX_LINE]);
 void debug_textures(t_textures *textures);
 
 #endif 

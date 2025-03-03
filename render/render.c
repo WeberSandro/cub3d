@@ -33,14 +33,14 @@ void draw_line(t_player *player, t_game *game, float start_x, int i)
     float sin_angle = sin(start_x);
     float ray_x = player->x;
     float ray_y = player->y;
-    printf("ate aqui ok \n");
+    //printf("ate aqui ok \n");
     while (!touch(ray_x, ray_y, game))
     {
-        printf("ate aqui tambem ok \n");
+        //printf("ate aqui tambem ok \n");
         ray_x += cos_angle;
         ray_y += sin_angle;
     }
-    printf("aqui deveria passar \n");
+    //printf("aqui deveria passar \n");
     int direction = touch(ray_x, ray_y, game);
     void *texture = NULL;
     
@@ -102,42 +102,33 @@ void draw_line(t_player *player, t_game *game, float start_x, int i)
         put_pixel(i, y, game->floor_color, game);
 }
 
-
 int draw_loop(t_game *game)
 {
     t_player *player = &game->player;
-    printf("estou passando por aqui \n");
     if (player->key_esc)
-        exit_program(game); // Fecha o jogo ao pressionar ESC
-
+        exit_program(game);
     // Atualiza a posição do jogador
     move_player(player, game);
-    printf("estou passando por aqui tambem\n");
     // Limpa a tela
     clear_image(game);
-    printf("estou passando por aqui logo depois\n");
     // Renderiza elementos no modo DEBUG
     if (DEBUG)
     {
         draw_square(player->x, player->y, 10, 0x00FF00, game); // Posição do jogador
         draw_map(game);                                        // Desenha o mapa
     }
-    printf("estou passando por aqui ainda\n");
     // Raycasting: calcula e desenha os raios
     float fraction = PI / 3 / WIDTH; // Divisão do campo de visão
     float start_x = player->angle - PI / 6; // Ângulo inicial
     int i = 0;
     while (i < WIDTH)
     {
-        printf("por aqui \n");
         draw_line(player, game, start_x, i); // Renderiza o raio
         start_x += fraction; // Incrementa o ângulo para o próximo raio
         i++;
     }
-    printf("estou passando por aqui de novo \n");
     // Atualiza a imagem na janela
     mlx_put_image_to_window(game->mlx, game->win, game->img, 0, 0);
-    printf("estou passando por aqui outra vez \n");
     return 0;
 }
 

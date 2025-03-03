@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlima-de <tlima-de@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tales <tales@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/06 15:00:49 by tlima-de          #+#    #+#             */
-/*   Updated: 2025/01/20 12:37:39 by tlima-de         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:39:05 by tales            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 
 #include "cub3d.h"
 #include <stdbool.h>
+#include "libft.h"
+
+
 #define NORTH 1
 #define SOUTH 2
 #define WEST 3
